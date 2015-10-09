@@ -32,6 +32,16 @@ Ensures that the cache is empty before running BODY."
 	   (ido-clever-match--score "instpkg" "install-package")
 	   (ido-clever-match--score "foo" "install-package"))))
 
+(deftest flex-higher-is-worse
+  (should (<
+	   (ido-clever-match--compute-flex-score "bha" "bha.py")
+	   (ido-clever-match--compute-flex-score "bha" "b/handlers.py")
+	   (ido-clever-match--compute-flex-score "bha" "baz/handlers.py")
+	   (ido-clever-match--compute-flex-score "bha" "foo/bar/handlers.py"))))
+
+(deftest flex-early-return
+  (should (not (ido-clever-match--compute-flex-score "x" "abc"))))
+
 (deftest matching
   (should (equal (ido-clever-match--match '("ido-mode" "ido-flex" "-ido") "ido")
 		 '("ido-mode" "ido-flex" "-ido"))))

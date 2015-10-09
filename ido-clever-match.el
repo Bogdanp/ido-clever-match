@@ -50,13 +50,13 @@
 (require 'files)
 (require 'subr-x)
 
-(defvar ido-clever-match--none   #b0000000000000000)
-(defvar ido-clever-match--mask   #b0000001111111111)
-(defvar ido-clever-match--flex   #b0000010000000000)
-(defvar ido-clever-match--substr #b0001000000000000)
-(defvar ido-clever-match--prefix #b0010000000000000)
-(defvar ido-clever-match--case   #b0100000000000000)
-(defvar ido-clever-match--equal  #b1000000000000000)
+(defvar ido-clever-match--none   #b00000000000000)
+(defvar ido-clever-match--mask   #b00000111111111)
+(defvar ido-clever-match--flex   #b00001000000000)
+(defvar ido-clever-match--substr #b00010000000000)
+(defvar ido-clever-match--prefix #b00100000000000)
+(defvar ido-clever-match--case   #b01000000000000)
+(defvar ido-clever-match--equal  #b10000000000000)
 
 (defvar ido-clever-match--cache nil)
 
