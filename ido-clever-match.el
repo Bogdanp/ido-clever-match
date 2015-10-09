@@ -3,7 +3,7 @@
 ;; Copyright (C) 2015 Bogdan Paul Popa
 
 ;; Author: Bogdan Paul Popa <popa.bogdanp@gmail.com>
-;; Version: 0.1.0
+;; Version: 0.1.1
 ;; Package-Requires: ((emacs "24") (cl-lib "0.5"))
 ;; Keywords: ido flex
 ;; URL: https://github.com/Bogdanp/ido-clever-match
