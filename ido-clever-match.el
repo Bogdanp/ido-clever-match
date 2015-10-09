@@ -166,7 +166,7 @@ Higher scores are worse."
 
 ;;;###autoload
 (defun ido-clever-match-enable ()
-  "Enable `ido-clever-match`.
+  "Enable `ido-clever-match'.
 
 An alternative matcher for ido mode.
 
