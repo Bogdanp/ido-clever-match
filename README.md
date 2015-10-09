@@ -24,10 +24,10 @@ The match classes are:
   <dt><code>prefix</code></dt>
   <dd>
     Prefix matches score second highest. They are treated as a special
-	case of <code>substring</code> matches and will always rank
-	higher. This class differentiates between sub-matches by comparing
-	the length of the input and each match: the closer the two numbers
-	are, the higher the score will be.
+    case of <code>substring</code> matches and will always rank
+    higher. This class differentiates between sub-matches by comparing
+    the length of the input and each match: the closer the two numbers
+    are, the higher the score will be.
   </dd>
 
   <dt><code>substring</code></dt>
@@ -50,8 +50,8 @@ The match classes are:
 
 ## Gotchas
 
-The matcher does not apply sub-metrics to strings longer than 512
-characters. That is, within a single class, all strings over 512
+The matcher does not apply sub-metrics to strings longer than `512`
+characters. That is, within a single class, all strings over `512`
 characters are going to give the same score.
 
 The matcher relies on heavy caching and might take up a lot of memory.
