@@ -12,17 +12,29 @@ Ensures that the cache is empty before running BODY."
      (ido-clever-match-reset-cache)
      ,@body))
 
-(deftest incompatible-strings-shouldnt-match ()
+(deftest incompatible-strings-shouldnt-match
   (should (= (ido-clever-match--score "foo" "f") ido-clever-match--none))
   (should (= (ido-clever-match--score "x" "f") ido-clever-match--none)))
 
-(deftest prefix-shorter-is-better ()
+(deftest prefix-shorter-is-better
   (should (> (ido-clever-match--score "ido" "ido-clever-match.el")
 	     (ido-clever-match--score "ido" "ido-clever-match-tests.el"))))
 
-(deftest substr-shorter-is-better ()
+(deftest substr-shorter-is-better
   (should (> (ido-clever-match--score "clev" "ido-clever-match.el")
 	     (ido-clever-match--score "clev" "ido-clever-match-tests.el"))))
+
+(deftest exact-then-prefix-then-substr-then-flex-then-none
+  (should (>
+	   (ido-clever-match--score "install-package" "install-package")
+	   (ido-clever-match--score "install" "install-package")
+	   (ido-clever-match--score "package" "install-package")
+	   (ido-clever-match--score "instpkg" "install-package")
+	   (ido-clever-match--score "foo" "install-package"))))
+
+(deftest matching
+  (should (equal (ido-clever-match--match '("ido-mode" "ido-flex" "-ido") "ido")
+		 '("ido-mode" "ido-flex" "-ido"))))
 
 (provide 'ido-clever-match-tests)
 ;;; ido-clever-match-tests.el ends here
