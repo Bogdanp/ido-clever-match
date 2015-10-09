@@ -72,6 +72,9 @@
 
 (defvar ido-clever-match--cache nil)
 
+(defvar ido-clever-match--last-text nil)
+(defvar ido-clever-match--last-matches nil)
+
 (defun ido-clever-match--apply-mask (score)
   "Apply the score mask to SCORE and reverse it."
   (- ido-clever-match--mask
@@ -127,7 +130,7 @@ Higher scores are worse."
 
 	  ((setq score (ido-clever-match--compute-flex-score text item))
 	   (logior ido-clever-match--flex
-	  	   (ido-clever-match--apply-mask score)))
+		   (ido-clever-match--apply-mask score)))
 
 	  (ido-clever-match--none)))
 
@@ -151,10 +154,19 @@ Higher scores are worse."
 
 (defun ido-clever-match (f &rest args)
   "Advises around (F ARGS) to provide alternative matching."
-  (let ((items (car args)))
+  (let ((items (car args)) matches)
     (if (equal "" ido-text)
 	(apply f args)
-      (ido-clever-match--match items ido-text))))
+
+      (setq
+       matches
+       (if (and ido-clever-match--last-text
+		(string-prefix-p ido-clever-match--last-text ido-text))
+	   (ido-clever-match--match ido-clever-match--last-matches ido-text)
+	 (ido-clever-match--match items ido-text)))
+
+      (setq ido-clever-match--last-text ido-text)
+      (setq ido-clever-match--last-matches matches))))
 
 ;;;###autoload
 (defun ido-clever-match-reset-cache ()
