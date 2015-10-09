@@ -4,7 +4,7 @@
 
 ;; Author: Bogdan Paul Popa <popa.bogdanp@gmail.com>
 ;; Version: 0.1.0
-;; Package-Requires: ((emacs "24"))
+;; Package-Requires: ((emacs "24") (cl-lib "0.5"))
 ;; Keywords: ido flex
 ;; URL: https://github.com/Bogdanp/ido-clever-match
 
@@ -57,9 +57,7 @@
 ;; `M-x ido-clever-match-disable RET`
 
 ;;; Code:
-(with-no-warnings
-  (require 'cl))
-
+(require 'cl-lib)
 (require 'ido)
 (require 'files)
 (require 'subr-x)
@@ -88,7 +86,7 @@ Higher scores are worse."
 	(score 0))
     (cl-loop
      for i from 0 to (1- chars) do
-     (setq current-index (search (substring text i (1+ i)) item :start2 last-index))
+     (setq current-index (cl-search (substring text i (1+ i)) item :start2 last-index))
      (if (not current-index)
 	 (return-from nil)
        (setq indexes (1+ indexes))
@@ -122,7 +120,7 @@ Higher scores are worse."
 		   (ido-clever-match--apply-mask (- (length item)
 						    (length text)))))
 
-	  ((setq score (search text item))
+	  ((setq score (cl-search text item))
 	   (logior ido-clever-match--substr
 		   (ido-clever-match--apply-mask (+ score (- (length item)
 							     (length text))))))
