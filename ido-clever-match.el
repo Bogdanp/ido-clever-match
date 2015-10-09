@@ -4,7 +4,7 @@
 
 ;; Author: Bogdan Paul Popa <popa.bogdanp@gmail.com>
 ;; Version: 0.1.1
-;; Package-Requires: ((emacs "24") (cl-lib "0.5"))
+;; Package-Requires: ((emacs "24.4") (cl-lib "0.5"))
 ;; Keywords: ido flex
 ;; URL: https://github.com/Bogdanp/ido-clever-match
 
