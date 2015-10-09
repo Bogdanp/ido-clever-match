@@ -77,7 +77,7 @@
   (- ido-clever-match--mask
      (logand ido-clever-match--mask score)))
 
-(defun* ido-clever-match--compute-flex-score (text item)
+(cl-defun ido-clever-match--compute-flex-score (text item)
   "Compute the flex score for TEXT in ITEM.
 
 Higher scores are worse."
@@ -88,7 +88,7 @@ Higher scores are worse."
      for i from 0 to (1- chars) do
      (setq current-index (cl-search (substring text i (1+ i)) item :start2 last-index))
      (if (not current-index)
-	 (return-from nil)
+	 (cl-return-from nil)
        (setq indexes (1+ indexes))
        (setq score (+ score (- current-index last-index)))
        (setq last-index (1+ current-index))))
