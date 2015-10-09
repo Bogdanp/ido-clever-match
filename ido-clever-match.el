@@ -59,27 +59,29 @@
 
 (defvar ido-clever-match--cache nil)
 
-(defun ido-clever-match--apply-mask (distance)
-  "Apply the distance mask to DISTANCE and reverse it."
+(defun ido-clever-match--apply-mask (score)
+  "Apply the score mask to SCORE and reverse it."
   (- ido-clever-match--mask
-     (logand ido-clever-match--mask distance)))
+     (logand ido-clever-match--mask score)))
 
 (defun* ido-clever-match--compute-flex-score (text item)
-  "Compute the flex score for TEXT in ITEM."
+  "Compute the flex score for TEXT in ITEM.
+
+Higher scores are worse."
   (let ((chars (length text)) (indexes 0)
 	(current-index 0) (last-index 0)
-	(distance 0))
+	(score 0))
     (cl-loop
      for i from 0 to (1- chars) do
      (setq current-index (search (substring text i (1+ i)) item :start2 last-index))
      (if (not current-index)
 	 (return-from nil)
        (setq indexes (1+ indexes))
-       (setq distance (+ distance (- current-index last-index)))
+       (setq score (+ score (- current-index last-index)))
        (setq last-index (1+ current-index))))
 
     (when (= chars indexes)
-      distance)))
+      score)))
 
 (defun ido-clever-match--score (text item)
   "Score TEXT against ITEM."
@@ -89,7 +91,7 @@
       (let* ((ignore-case (equal (downcase text) text))
 	     (text (if ignore-case (downcase text) text))
 	     (item (if ignore-case (downcase item) item))
-	     index distance)
+	     index)
 	(setq
 	 score
 	 (cond
