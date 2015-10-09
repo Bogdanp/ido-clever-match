@@ -48,6 +48,7 @@
 
 (require 'ido)
 (require 'files)
+(require 'subr-x)
 
 (defvar ido-clever-match--none   #b0000000000000000)
 (defvar ido-clever-match--mask   #b0000001111111111)
@@ -125,23 +126,16 @@ Higher scores are worse."
 
 (defun ido-clever-match--match (items text)
   "Sort ITEMS against TEXT."
-  (let ((max-bucket 0) buckets results)
+  (let ((buckets (make-hash-table)))
     (dolist (item items)
       (let ((score (ido-clever-match--score text item)))
 	(when (> score 0)
-	  (when (> score max-bucket)
-	    (setq max-bucket score))
-	  (setq buckets
-		(plist-put buckets score
-			   (cons item (plist-get buckets score)))))))
+	  (puthash score (cons item (gethash score buckets))
+		   buckets))))
 
     (cl-loop
-     for i from 1 to max-bucket do
-     (let ((bucket (plist-get buckets i)))
-       (when bucket
-	 (setq results (nconc (reverse bucket) results)))))
-
-    results))
+     for k in (sort (hash-table-keys buckets) #'>)
+     nconc (reverse (gethash k buckets)))))
 
 (defun ido-clever-match (f &rest args)
   "Advises around (F ARGS) to provide alternative matching."
