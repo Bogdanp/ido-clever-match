@@ -6,7 +6,7 @@
 ;; Version: 0.1.0
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: ido flex
-;; URL: https://github.com/Bogdanp/ido-clever-match.el
+;; URL: https://github.com/Bogdanp/ido-clever-match
 
 ;; This file is NOT part of GNU Emacs.
 
