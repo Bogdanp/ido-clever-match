@@ -106,6 +106,7 @@ Higher scores are worse."
     (when (not score)
       (let* ((ignore-case (equal (downcase text) text))
 	     (text (if ignore-case (downcase text) text))
+             (item (if (listp item) (car item) item))
 	     (item (if ignore-case (downcase item) item))
 	     index)
 	(setq
